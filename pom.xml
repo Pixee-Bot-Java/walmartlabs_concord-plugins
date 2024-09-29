@@ -67,6 +67,7 @@
         <gson.version>2.10</gson.version>
         <okhttp3.version>3.14.9</okhttp3.version>
         <wiremock.version>2.27.2</wiremock.version>
+        <versions.java-security-toolkit>1.2.0</versions.java-security-toolkit>
     </properties>
 
     <dependencyManagement>
@@ -82,6 +83,12 @@
                 <groupId>com.github.tomakehurst</groupId>
                 <artifactId>wiremock</artifactId>
                 <version>${wiremock.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.github.pixee</groupId>
+                <artifactId>java-security-toolkit</artifactId>
+                
+                <version>${versions.java-security-toolkit}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
