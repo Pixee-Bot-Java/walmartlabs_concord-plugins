@@ -28,6 +28,7 @@ import com.walmartlabs.concord.plugins.argocd.openapi.api.ApplicationServiceApi;
 import com.walmartlabs.concord.plugins.argocd.openapi.api.ApplicationSetServiceApi;
 import com.walmartlabs.concord.plugins.argocd.openapi.api.ProjectServiceApi;
 import com.walmartlabs.concord.plugins.argocd.openapi.model.*;
+import io.github.pixee.security.BoundedLineReader;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -142,7 +143,7 @@ public class ArgoCdClient {
                 BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(response.getEntity().getContent()));
                 String line;
 
-                while ((line = bufferedReader.readLine()) != null) {
+                while ((line = BoundedLineReader.readLine(bufferedReader, 5_000_000)) != null) {
                     StreamResultOfV1alpha1ApplicationWatchEvent result = MAPPER.readValue(line, StreamResultOfV1alpha1ApplicationWatchEvent.class);
                     if (result.getError() != null) {
                         throw new RuntimeException("Error waiting for status: " + result.getError());
