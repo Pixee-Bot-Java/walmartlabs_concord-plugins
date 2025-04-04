@@ -22,6 +22,7 @@ package com.walmartlabs.concord.plugins.terraform;
 
 import com.walmartlabs.concord.common.IOUtils;
 import com.walmartlabs.concord.sdk.MapUtils;
+import io.github.pixee.security.BoundedLineReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -171,7 +172,7 @@ public class TerraformBinaryResolver {
             }
 
             try (BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()))) {
-                String s = reader.readLine();
+                String s = BoundedLineReader.readLine(reader, 5_000_000);
                 if (s == null) {
                     throw new RuntimeException("Unable to locate terraform binary.");
                 }
